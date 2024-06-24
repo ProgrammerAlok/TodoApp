@@ -1,6 +1,6 @@
 import Todo from "../models/todo.model.js";
 import User from "../models/user.model.js";
-import { ApiResponse } from "../utils/apiResponse.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const createTodo = asyncHandler(async (req, res) => {
