@@ -77,7 +77,6 @@ export default function Todo() {
     
     (async()=>{
         const res = await axiosInstnce.get(endpoints.todo.get);
-        console.log(res);
         const {data} = res.data;
         setTodos(data)
     })()
