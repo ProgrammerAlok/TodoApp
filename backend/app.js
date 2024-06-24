@@ -6,8 +6,8 @@ import cookieParser from 'cookie-parser';
 // import { errorHandlerDev, errorHandlerProd } from './src/utils/globalErrorHandler.js';
 
 // routes
-import authRoute from './src/routes/auth.route.js';
-import todoRoute from './src/routes/todo.route.js';
+import authRoute from './routes/auth.route.js';
+import todoRoute from './routes/todo.route.js';
 
 const app = express();
 
