@@ -3,7 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 
-import { errorHandlerDev, errorHandlerProd } from './src/utils/globalErrorHandler.js';
+// import { errorHandlerDev, errorHandlerProd } from './src/utils/globalErrorHandler.js';
 
 // routes
 import authRoute from './src/routes/auth.route.js';
@@ -22,6 +22,13 @@ app.use(morgan("dev"));
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/todo', todoRoute);
 
-app.use(errorHandlerDev);
+app.use((err, req, res, next) => {
+    res.status(err.statusCode || 500).json({
+        status: err.status,
+        err: err,
+        message: err.message,
+        stack: err.stack,
+    });
+});
 
 export default app;
