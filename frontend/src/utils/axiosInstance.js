@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const baseUrl = "http://localhost:8080/api/v1"
-const baseUrl = 'https://todoapp-daxe.onrender.com'
+const baseUrl = 'https://todoapp-daxe.onrender.com/api/v1'
 
 export const axiosInstnce = axios.create({
     baseURL: baseUrl,
