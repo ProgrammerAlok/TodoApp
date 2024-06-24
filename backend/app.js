@@ -19,6 +19,10 @@ app.use(cors({
 }));
 app.use(morgan("dev"));
 
+app.get('/', (req, res) => {
+    res.send("<h1> server is running <h1/>")
+})
+
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/todo', todoRoute);
 
