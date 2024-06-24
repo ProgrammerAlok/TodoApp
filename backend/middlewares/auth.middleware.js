@@ -3,7 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from 'jsonwebtoken';
 
 export const isLoggedIn = asyncHandler(async (req, res, next) => {
-    const cookie = req?.headers?.cookie.split(" ")[1];
+    const cookie = req?.headers?.cookie;
     
     if (!cookie) {
       throw new ApiError(401, "cookie not found...");
