@@ -35,7 +35,7 @@ const Demo = styled('div')(({ theme }) => ({
 
 export default function Todo() {
   const navigate = useNavigate();
-  const { user, isLoading, setUser } = useAuth();
+  const { user, setUser, isLoading, setIsLoading } = useAuth();
 
   const [dense, setDense] = useState(false);
   const [secondary, setSecondary] = useState(false);
@@ -63,10 +63,12 @@ export default function Todo() {
   async function handleLogout() {
     const res = await axiosInstnce.get(endpoints.auth.logout);
     const { success } = res.data;
+    setIsLoading(true);
     if(success) {
-      navigate('/login');
       setUser(null);
+      navigate('/login');
     }
+    setIsLoading(false);
   }
 
 
@@ -80,7 +82,7 @@ export default function Todo() {
         const {data} = res.data;
         setTodos(data)
     })()
-  }, [])
+  }, [user])
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752, mx: 'auto' }}>

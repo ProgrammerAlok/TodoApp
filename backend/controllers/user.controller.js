@@ -42,7 +42,7 @@ export const loginUser = asyncHandler(async (req, res, next) => {
     console.log(token)
     res
     .cookie('token', token, {
-        // path: '/',
+        path: '/',
         // expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
@@ -63,7 +63,7 @@ export const getUser = asyncHandler(async (req, res, next) => {
     if(!user) {
         throw new ApiError(404, "User not found...");
     }
-
+    
     res
     .status(200)
     .json(
@@ -73,7 +73,14 @@ export const getUser = asyncHandler(async (req, res, next) => {
 
 export const logout = asyncHandler(async (req, res, next) => {    
     res
-    .clearCookie()
+    .cookie('token', null, {
+        path: '/',
+        // expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+        maxAge: 0,
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+    })
     .status(200)
     .json(
         new ApiResponse(200, null, "user logout successfully...")
