@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 
 export const isLoggedIn = asyncHandler(async (req, res, next) => {
     const cookie = req?.headers?.cookie;
+    // const cookie = req?.headers?.cookie.split(' ')[1];
     
     if (!cookie) {
       throw new ApiError(401, "cookie not found...");

@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import { Button, TextField } from '@mui/material';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import { axiosInstnce, endpoints } from '../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
@@ -82,11 +82,13 @@ export default function Todo() {
         const {data} = res.data;
         setTodos(data)
     })()
-  }, [user])
+  }, [user, isLoading])
+
+  if(isLoading || !user) return <CircularProgress />
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752, mx: 'auto' }}>
-        <Button variant="contained" sx={{ ml: '88%' }} onClick={handleLogout}>Logout</Button>
+        <Button variant="contained" sx={{ mx: 'auto' }} onClick={handleLogout}>Logout</Button>
         <Grid item xs={12} md={6}>
           <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
             You have {todos.length} todos

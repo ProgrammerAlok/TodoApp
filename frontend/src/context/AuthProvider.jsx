@@ -1,26 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthContext } from "./AuthContext";
 import { axiosInstnce, endpoints } from '../utils/axiosInstance';
-import { CircularProgress } from '@mui/material';
 
 
 const AuthProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null)
 
   async function handleGetUser () {
-    const res = await axiosInstnce.get(endpoints.auth.me);
-    const { data, success } = res.data;
-    if(success){
+    setIsLoading(true);
+    try {
+      const res = await axiosInstnce.get(endpoints.auth.me);
+      const { data, success } = res.data;
+      if(success){
         setUser(data);
+      }
+    } catch (error) {
+      // console.log(error)
+    } finally {
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }
 
   useEffect(() => {
     handleGetUser();
   }, []);
-
+  
   const value = {
     isLoading, setIsLoading,
     user, setUser,
@@ -28,7 +33,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-        {isLoading ? <CircularProgress /> : children}
+      {children}
     </AuthContext.Provider>
   )
 }

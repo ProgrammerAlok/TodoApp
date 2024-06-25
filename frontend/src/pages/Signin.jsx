@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RRDLink, useNavigate } from 'react-router-dom';
 import { axiosInstnce, endpoints } from '../utils/axiosInstance';
 import useAuth from '../hooks/useAuth';
+import { CircularProgress } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -55,7 +56,9 @@ export default function SignIn() {
   React.useEffect(() => {
     if(isLoading) return;
     if(user) return navigate('/');
-  })
+  }, [isLoading, user])
+
+  if(isLoading || user) return <CircularProgress />
 
   return (
     <ThemeProvider theme={defaultTheme}>
