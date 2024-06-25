@@ -73,9 +73,9 @@ export const getUser = asyncHandler(async (req, res, next) => {
 
 export const logout = asyncHandler(async (req, res, next) => {    
     res
-    .clearCookie('token')
+    .clearCookie()
     .status(200)
     .json(
-        new ApiResponse(200, {}, "user logout successfully...")
+        new ApiResponse(200, null, "user logout successfully...")
     );
 });
