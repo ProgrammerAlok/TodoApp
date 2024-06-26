@@ -49,14 +49,19 @@ export default function Todo() {
   }
 
   async function handleLogout() {
-    const res = await axiosInstnce.get(endpoints.auth.logout);
-    const { success } = res.data;
     setIsLoading(true);
-    if(success) {
-      setUser(null);
-      navigate('/login');
+    try {
+      const res = await axiosInstnce.get(endpoints.auth.logout);
+      const { success } = res.data;
+      if(success) {
+        setUser(null);
+        navigate('/login');
+      }
+    } catch (error) {
+      // console.log(error)
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
 
@@ -72,7 +77,7 @@ export default function Todo() {
     })()
   }, [user, isLoading])
 
-  if(isLoading || !user) return <LinearProgress />
+  if(isLoading || !user) return;
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752, mx: 'auto' }}>

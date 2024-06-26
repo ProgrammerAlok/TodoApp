@@ -36,11 +36,13 @@ const defaultTheme = createTheme();
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { isLoading, user } = useAuth();
+  const { isLoading, setIsLoading, user } = useAuth();
 
-  const [alertData, setAlertData] = React.useState(null)
+  const [alertData, setAlertData] = React.useState(null);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const data = new FormData(event.currentTarget);
     const Data = {
       firstName: data.get('firstName'),
@@ -48,24 +50,33 @@ export default function SignUp() {
       email: data.get('email'),
       password: data.get('password'),
     };
-    const res = await axiosInstnce.post(endpoints.auth.register, Data);
-    const { success, message } = res.data;
-    if(success) {
-      setAlertData({
-        isSuccess: success,
-        message: message,
-      });
-      navigate('/login');
+    try {
+      const res = await axiosInstnce.post(endpoints.auth.register, Data);
+      const { success, message } = res.data;
+      if(success) {
+        setAlertData({
+          isSuccess: success,
+          message: message,
+        });
+        navigate('/login');
+      }
+      event.currentTarget.clear();
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false);
     }
-    event.currentTarget.clear();
   };
 
   React.useEffect(() => {
+
     if(isLoading) return;
+
     if(user) return navigate('/');
+    
   }, [isLoading, user])
 
-  if(isLoading || user) return <LinearProgress />
+  if(isLoading || user) return;
 
   return (
     <ThemeProvider theme={defaultTheme}>
