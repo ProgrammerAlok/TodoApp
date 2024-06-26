@@ -39,7 +39,7 @@ export const loginUser = asyncHandler(async (req, res, next) => {
             expiresIn: process.env.JWT_EXPIRY,
         }
     );
-    console.log(token)
+    
     res
     .cookie('token', token, {
         path: '/',
