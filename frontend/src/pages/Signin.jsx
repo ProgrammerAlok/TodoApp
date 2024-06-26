@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RRDLink, useNavigate } from 'react-router-dom';
 import { axiosInstnce, endpoints } from '../utils/axiosInstance';
 import useAuth from '../hooks/useAuth';
-import { CircularProgress } from '@mui/material';
+import { LinearProgress } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -36,20 +36,27 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const { user, setUser, isLoading } = useAuth();
+  const { user, setUser, isLoading, setIsLoading } = useAuth();
 
   const handleSubmit = async (event) => {
+    setIsLoading(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const credentials = {
       email: data.get('email'),
       password: data.get('password'),
     };
-    const res = await axiosInstnce.post(endpoints.auth.login, credentials);
-    const {data: userData, success} = res.data;
-    if(success){
-      setUser(userData);
-      navigate('/');
+    try {
+      const res = await axiosInstnce.post(endpoints.auth.login, credentials);
+      const {data: userData, success} = res.data;
+      if(success){
+        setUser(userData);
+        navigate('/');
+      }
+    } catch (error) {
+      // console.log(error)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -58,7 +65,7 @@ export default function SignIn() {
     if(user) return navigate('/');
   }, [isLoading, user])
 
-  if(isLoading || user) return <CircularProgress />
+  if(isLoading || user) return<></>;
 
   return (
     <ThemeProvider theme={defaultTheme}>

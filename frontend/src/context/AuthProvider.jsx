@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AuthContext } from "./AuthContext";
 import { axiosInstnce, endpoints } from '../utils/axiosInstance';
+import { LinearProgress } from '@mui/material';
 
 
 const AuthProvider = ({ children }) => {
@@ -33,6 +34,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
+      {isLoading && (<LinearProgress />)}
       {children}
     </AuthContext.Provider>
   )

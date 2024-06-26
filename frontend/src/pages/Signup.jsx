@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RRDLink, useNavigate } from 'react-router-dom'
 import { axiosInstnce, endpoints } from '../utils/axiosInstance';
-import { Alert, CircularProgress } from '@mui/material';
+import { Alert, CircularProgress, LinearProgress } from '@mui/material';
 import useAuth from '../hooks/useAuth';
 
 function Copyright(props) {
@@ -65,7 +65,7 @@ export default function SignUp() {
     if(user) return navigate('/');
   }, [isLoading, user])
 
-  if(isLoading || user) return <CircularProgress />
+  if(isLoading || user) return <LinearProgress />
 
   return (
     <ThemeProvider theme={defaultTheme}>

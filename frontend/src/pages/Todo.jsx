@@ -1,33 +1,21 @@
-import {cloneElement, React, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import { Button, CircularProgress, TextField } from '@mui/material';
+import { Button, LinearProgress, TextField } from '@mui/material';
 import { axiosInstnce, endpoints } from '../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
-function generate(data, element) {
-  return data.map(({title}) =>
-    cloneElement(element, {
-      key: title,
-    }),
-  );
-}
 
 const Demo = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -84,7 +72,7 @@ export default function Todo() {
     })()
   }, [user, isLoading])
 
-  if(isLoading || !user) return <CircularProgress />
+  if(isLoading || !user) return <LinearProgress />
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752, mx: 'auto' }}>

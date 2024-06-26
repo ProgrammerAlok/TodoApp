@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrowserRouter, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import Todo from '../pages/Todo';
 import SignIn from '../pages/Signin';
 import SignUp from '../pages/Signup';
